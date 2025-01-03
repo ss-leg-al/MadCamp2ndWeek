@@ -3,16 +3,22 @@ const mongoose = require('./config/db');
 const cors = require('cors');
 require('dotenv').config();
 
+
 const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
+const chatbotRoutes = require('./routes/chatbotRoutes');
 
 const app = express();
-
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/chat', chatbotRoutes);
+
+
+
 
 // Routes
 app.use('/users', userRoutes);
