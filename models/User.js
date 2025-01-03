@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     points: { type: Number, default: 0 },
     level: {
       type: String,
-      enum: ['Bronze', 'Silver', 'Gold', 'Platinum'],
+      enum: ['Bronze', 'Silver', 'Gold'],
       default: 'Bronze',
     },
   },
