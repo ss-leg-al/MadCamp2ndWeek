@@ -56,7 +56,16 @@ const userController = {
       res.status(500).json({ error: err.message });
     }
   },
-  
+  getUserRankings: async (req, res) => {
+    try {
+      // MongoDB 쿼리를 사용해 포인트 순으로 정렬된 유저 목록 가져오기
+      const users = await User.find().sort({ points: -1 }); // 내림차순 정렬
+      res.status(200).json(users);
+    } catch (error) {
+      console.error('Error fetching user rankings:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
 };
 
 
