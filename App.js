@@ -7,6 +7,7 @@ const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const authRoutes = require('./routes/authRoutes');
+const chatRoutes = require('./routes/chatbotRoutes')
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/login', authRoutes);
+app.use('/chat',chatRoutes);
 
 // Routes
 app.use('/users', userRoutes);
