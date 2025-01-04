@@ -6,6 +6,7 @@ require('dotenv').config();
 const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -13,6 +14,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/login', authRoutes);
 
 // Routes
 app.use('/users', userRoutes);
@@ -30,5 +33,5 @@ app.use((err, req, res, next) => {
 });
 
 // Server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, "0.0.0.0", () => console.log(`Server running on http://localhost:${PORT}`));            
