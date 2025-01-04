@@ -30,24 +30,26 @@ const postController = {
       res.status(500).json({ error: err.message });
     }
   },
+
   searchPosts: async (req, res) => {
     try {
-      const { query } = req.query; // 쿼리 파라미터에서 검색어 가져오기
+      const { query } = req.query;
 
       if (!query) {
         return res.status(400).json({ error: 'Query parameter is required' });
       }
 
-      // 제목 또는 내용에서 검색어 찾기
       const posts = await Post.find({
         $or: [
-          { title: { $regex: query, $options: 'i' } }, // 대소문자 구분 없이 검색
+          { title: { $regex: query, $options: 'i' } },
           { content: { $regex: query, $options: 'i' } },
         ],
       });
+
       if (posts.length === 0) {
         return res.status(200).json({ message: 'No posts found', posts: [] });
       }
+
       res.status(200).json(posts);
     } catch (err) {
       console.error(err);
@@ -55,7 +57,34 @@ const postController = {
     }
   },
 
-};
+  deletePost: async (req, res) => {
+    try {
+      const { id } = req.params;
 
+    // 요청 사용자 정보
+    const userId = req.user.id; // JWT에서 추출된 사용자 ID
+
+    // 삭제할 포스트 검색
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    // 작성자 확인
+    if (post.authorId.toString() !== userId) {
+      return res.status(403).json({ message: 'You do not have permission to delete this post' });
+    }
+
+    // 포스트 삭제
+    await Post.findByIdAndDelete(id);
+
+    res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+};
 
 module.exports = postController;
