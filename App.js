@@ -13,7 +13,9 @@ const authRoutes = require('./routes/authRoutes');
 const app = express();
 // Middleware
 
-app.use(cors());
+app.use(cors({
+  origin: '*' // 모든 도메인 허용 (개발 환경에서만 사용)
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -40,4 +42,4 @@ app.use((err, req, res, next) => {
 
 // Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT,() => console.log(`Server running on http://localhost:${PORT}`));
