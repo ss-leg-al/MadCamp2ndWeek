@@ -1,9 +1,7 @@
 const User = require('../models/User');
 
 const updateUserLevel = (user) => {
-  if (user.points >= 300) {
-    user.level = 'Platinum';
-  } else if (user.points >= 200) {
+  if  (user.points >= 200) {
     user.level = 'Gold';
   } else if (user.points >= 100) {
     user.level = 'Silver';

@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema(
     content: { type: String, required: true },
     videoUrl: { type: String },
     authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    likes: { type: Number, default: 0 }
   },
   { timestamps: true }
 );
