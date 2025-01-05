@@ -28,7 +28,7 @@ app.use('/chat', chatbotRoutes);
 // Routes
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
-app.use('/posts/:postId/comments', commentRoutes);
+app.use('/posts', commentRoutes);
 
 // Default Route
 app.get('/', (req, res) => {

@@ -41,6 +41,24 @@ const commentController = {
       res.status(500).json({ error: err.message });
     }
   },
+  getCommentsByPost: async (req, res) => {
+    try {
+      console.log("Request params:", req.params)
+      const { postId } = req.params;
+      console.log("Requested postId:", postId);
+      // 해당 postId에 대한 댓글 검색
+      const comments = await Comment.find({ postId }).populate("commenterId", "name email").sort({ createdAt: -1 });
+
+      if (!comments || comments.length === 0) {
+        return res.status(404).json({ message: 'No comments found for this post.' });
+      }
+
+      res.status(200).json(comments);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to fetch comments.' });
+    }
+  },
 };
 
 module.exports = commentController;
