@@ -77,7 +77,9 @@ const postController = {
           { title: { $regex: query, $options: 'i' } },
           { content: { $regex: query, $options: 'i' } },
         ],
-      });
+      })
+      .populate('authorId', 'name') // authorId를 User 모델과 연결하여 name 필드 가져오기
+
 
       if (posts.length === 0) {
         return res.status(200).json({ message: 'No posts found', posts: [] });
