@@ -1,45 +1,6 @@
 const Post = require('../models/Post');
 
 const postController = {
-  likePost: async (req, res) => {
-    try {
-      const { id } = req.params; // 게시물 ID
-      const post = await Post.findById(id);
-
-      if (!post) {
-        return res.status(404).json({ message: 'Post not found' });
-      }
-
-      post.likes += 1; // 좋아요 수 증가
-      await post.save();
-
-      res.status(200).json({ message: 'Post liked', likes: post.likes });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  },
-
-  unlikePost: async (req, res) => {
-    try {
-      const { id } = req.params; // 게시물 ID
-      const post = await Post.findById(id);
-
-      if (!post) {
-        return res.status(404).json({ message: 'Post not found' });
-      }
-
-      if (post.likes > 0) {
-        post.likes -= 1; // 좋아요 수 감소
-        await post.save();
-      }
-
-      res.status(200).json({ message: 'Post unliked', likes: post.likes });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  },
   createPost: async (req, res) => {
     try {
       const { title, content, videoUrl, authorId } = req.body;
@@ -53,19 +14,25 @@ const postController = {
 
   getPosts: async (req, res) => {
     try {
-      const posts = await Post.find().sort({ createdAt: -1 });
-      res.json(posts);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+      const posts = await Post.find()
+        .populate('authorId', 'name') // authorId로 연결된 User의 username 가져오기
+        .sort({ createdAt: -1 }); // 최신순 정렬
+  
+      res.status(200).json(posts);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to fetch posts' });
     }
   },
 
   getPost: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id);
+      const post = await Post.findById(req.params.id)
+        .populate('authorId', 'name'); // authorId를 User와 연결, name 필드 가져오기
       if (!post) return res.status(404).json({ message: 'Post not found' });
       res.json(post);
     } catch (err) {
+      console.error("Error fetching post:", err);
       res.status(500).json({ error: err.message });
     }
   },
