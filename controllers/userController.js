@@ -10,7 +10,25 @@ const updateUserLevel = (user) => {
   }
 };
 
+
 const userController = {
+  updateAllUserLevels: async (req, res) => {
+    try {
+      // 모든 유저를 가져옵니다
+      const users = await User.find();
+
+      // 각 유저의 레벨을 업데이트
+      for (const user of users) {
+        updateUserLevel(user);
+        await user.save(); // 변경사항 저장
+      }
+
+      res.status(200).json({ message: '모든 유저의 레벨이 업데이트되었습니다.' });
+    } catch (err) {
+      console.error('Error updating all user levels:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
   getUser: async (req, res) => {
     try {
       const user = await User.findById(req.params.id);

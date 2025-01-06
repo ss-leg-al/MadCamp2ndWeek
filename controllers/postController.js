@@ -1,6 +1,33 @@
 const Post = require('../models/Post');
 
 const postController = {
+  likePost: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.body.userId; // 프론트엔드에서 전달받은 유저 ID
+      const post = await Post.findById(id);
+  
+      if (!post) {
+        return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+      }
+  
+      // 이미 좋아요를 누른 유저인지 확인
+      if (post.likedBy.includes(userId)) {
+        return res.status(400).json({ message: '이미 좋아요를 누르셨습니다.' });
+      }
+  
+      // 좋아요 추가 및 유저 기록
+      post.likes += 1;
+      post.likedBy.push(userId);
+      await post.save();
+  
+      res.status(200).json({ message: '좋아요가 성공적으로 추가되었습니다.', likes: post.likes });
+    } catch (error) {
+      console.error('좋아요 처리 중 오류:', error);
+      res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    }
+  },
+
   createPost: async (req, res) => {
     try {
       const { title, content, videoUrl, authorId } = req.body;
