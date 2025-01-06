@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
 });
 
 // Google 로그인 후 리디렉션
-// Google 로그인 후 리디렉션
 router.get('/redirect', async (req, res) => {
   const { code } = req.query;
 
@@ -57,7 +56,7 @@ router.get('/redirect', async (req, res) => {
 
     // 사용자 정보를 포함하여 프론트엔드로 리디렉션
     res.redirect(
-      `http://localhost:5173?name=${encodeURIComponent(user.name)}&email=${encodeURIComponent(user.email)}&picture=${encodeURIComponent(userInfo.picture)}`
+      `http://localhost:5173?name=${encodeURIComponent(user.name)}&email=${encodeURIComponent(user.email)}&picture=${encodeURIComponent(userInfo.picture)}&_id=${user._id}`
     );
   } catch (error) {
     console.error('Google OAuth Error:', error.response?.data || error.message);

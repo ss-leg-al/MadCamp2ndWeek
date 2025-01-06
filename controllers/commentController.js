@@ -35,19 +35,29 @@ const commentController = {
       const comment = new Comment({ postId, commenterId, content, pointsGiven });
       await comment.save();
 
-      res.status(201).json({ message: 'Comment created and points updated.', comment });
+      // 저장된 댓글에 작성자 이름 추가
+      const populatedComment = await comment.populate('commenterId', 'name');
+
+      res.status(201).json({ 
+        message: 'Comment created and points updated.', 
+        comment: populatedComment 
+      });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: err.message });
     }
   },
+
   getCommentsByPost: async (req, res) => {
     try {
-      console.log("Request params:", req.params)
+      console.log("Request params:", req.params);
       const { postId } = req.params;
       console.log("Requested postId:", postId);
+
       // 해당 postId에 대한 댓글 검색
-      const comments = await Comment.find({ postId }).populate("commenterId", "name email").sort({ createdAt: -1 });
+      const comments = await Comment.find({ postId })
+        .populate("commenterId", "name")
+        .sort({ createdAt: -1 });
 
       if (!comments || comments.length === 0) {
         return res.status(404).json({ message: 'No comments found for this post.' });
