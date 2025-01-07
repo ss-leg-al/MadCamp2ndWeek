@@ -12,6 +12,7 @@ const commentRoutes = require('./routes/commentRoutes');
 const chatbotRoutes = require('./routes/chatbotRoutes');
 const authRoutes = require('./routes/authRoutes');
 const newsRoutes = require('./routes/newsRoutes');
+const trainerRoutes = require('./routes/trainerRoutes');
 
 const app = express();
 // Middleware
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/login', authRoutes);
 app.use('/chat', chatbotRoutes);
 app.use('/news', newsRoutes);
+app.use('/trainers', trainerRoutes);
 
 
 
