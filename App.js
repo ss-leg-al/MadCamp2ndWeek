@@ -1,6 +1,8 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('./config/db');
 const cors = require('cors');
+
 require('dotenv').config();
 
 
@@ -29,6 +31,7 @@ app.use('/chat', chatbotRoutes);
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 app.use('/posts', commentRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Default Route
 app.get('/', (req, res) => {
