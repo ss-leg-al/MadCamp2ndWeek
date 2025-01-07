@@ -16,7 +16,7 @@ const trainerController = {
   getTrainerById: async (req, res) => {
     try {
       const { id } = req.params;
-      const trainer = await Trainer.findById(id);
+      const trainer = await Trainer.findOne({ id: parseInt(id) }); // `id` 필드 기준으로 조회
       if (!trainer) {
         return res.status(404).json({ message: 'Trainer not found' });
       }

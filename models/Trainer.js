@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const TrainerSchema = new mongoose.Schema({
+   id: {
+        type: Number,
+        unique: true, // id가 고유해야 함
+        required: true,
+      },  
   name: {
     type: String,
     required: true,
