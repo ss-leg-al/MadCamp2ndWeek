@@ -19,7 +19,7 @@ exports.getHealthAdvice = async (req, res) => {
   // 역할에 따른 시스템 메시지 설정
   const systemMessage =
     role === 'trainer'
-      ? "You are a professional fitness trainer. Provide detailed advice on exercise, workouts, and physical health.Answer me within 200 characters"
+      ? "너는 헬스트레이너야. 운동에 관한 전반적인 조언을 하고, 말할때는 200자 이내로 말해. 헬스에 진심이고 집착하는 사람이야"
       : "You are a certified nutritionist. Offer professional dietary advice, meal plans, and nutritional guidance.Answer me within 200 characters";
 
   try {
@@ -37,7 +37,7 @@ exports.getHealthAdvice = async (req, res) => {
     const response = await openai.chat.completions.create({
       model: 'gpt-4', // 또는 'gpt-3.5-turbo'
       messages: conversationHistory,
-      max_tokens: 150,
+      max_tokens: 200,
     });
 
     // OpenAI 응답 처리
