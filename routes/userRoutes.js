@@ -8,5 +8,6 @@ router.post('/', userController.createUser);
 router.put('/:id', userController.updateUserPoints);
 router.get('/', userController.getAllUsers);
 router.patch('/update-levels', userController.updateAllUserLevels);
+router.get('/:id/level', userController.getUserLevel);
 
 module.exports = router;

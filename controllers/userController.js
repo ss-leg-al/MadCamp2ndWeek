@@ -1,7 +1,7 @@
 const User = require('../models/User');
 
 const updateUserLevel = (user) => {
-  if  (user.points >= 200) {
+  if (user.points >= 200) {
     user.level = 'Gold';
   } else if (user.points >= 100) {
     user.level = 'Silver';
@@ -10,25 +10,38 @@ const updateUserLevel = (user) => {
   }
 };
 
-
 const userController = {
   updateAllUserLevels: async (req, res) => {
     try {
-      // 모든 유저를 가져옵니다
       const users = await User.find();
-
-      // 각 유저의 레벨을 업데이트
       for (const user of users) {
         updateUserLevel(user);
-        await user.save(); // 변경사항 저장
+        await user.save();
       }
-
       res.status(200).json({ message: '모든 유저의 레벨이 업데이트되었습니다.' });
     } catch (err) {
       console.error('Error updating all user levels:', err);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
+
+  getUserLevel: async (req, res) => {
+    try {
+      const { id } = req.params; // URL에서 유저 ID 추출
+      const user = await User.findById(id);
+
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      // 유저 레벨 반환
+      res.status(200).json({ level: user.level });
+    } catch (err) {
+      console.error('Error fetching user level:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+
   getUser: async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
@@ -64,6 +77,7 @@ const userController = {
       res.status(500).json({ error: err.message });
     }
   },
+
   getAllUsers: async (req, res) => {
     try {
       const users = await User.find().sort({ createdAt: -1 }); // 최신 순으로 정렬
@@ -72,9 +86,9 @@ const userController = {
       res.status(500).json({ error: err.message });
     }
   },
+
   getUserRankings: async (req, res) => {
     try {
-      // MongoDB 쿼리를 사용해 포인트 순으로 정렬된 유저 목록 가져오기
       const users = await User.find().sort({ points: -1 }); // 내림차순 정렬
       res.status(200).json(users);
     } catch (error) {
@@ -83,6 +97,5 @@ const userController = {
     }
   }
 };
-
 
 module.exports = userController;
