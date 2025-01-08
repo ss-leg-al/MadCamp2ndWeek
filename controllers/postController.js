@@ -104,23 +104,17 @@ const postController = {
   deletePost: async (req, res) => {
     try {
       const { id } = req.params;
-      const userId = req.user.id;
-
-      const post = await Post.findById(id);
-
-      if (!post) {
-        return res.status(404).json({ message: 'Post not found' });
+      if (!id) {
+        return res.status(400).json({ message: "Post ID is required" });
       }
-
-      if (post.authorId.toString() !== userId) {
-        return res.status(403).json({ message: 'You do not have permission to delete this post' });
+      const deletedPost = await Post.findByIdAndDelete(id);
+      if (!deletedPost) {
+        return res.status(404).json({ message: "Post not found" });
       }
-
-      await Post.findByIdAndDelete(id);
-      res.status(200).json({ message: 'Post deleted successfully' });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(200).json({ message: "Post deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
   },
 };

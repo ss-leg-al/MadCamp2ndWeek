@@ -8,6 +8,6 @@ router.get('/:id', postController.getPost);
 router.patch('/:id/like', postController.likePost);
 router.post('/', upload.single('image'), postController.createPost); // 이미지 업로드 처리
 router.get('/', postController.getPosts);
-router.delete('/:id', authenticate, postController.deletePost);
+router.delete('/:id', postController.deletePost);
 
 module.exports = router;

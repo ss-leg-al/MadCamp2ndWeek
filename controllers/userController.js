@@ -14,7 +14,7 @@ const updateUserLevel = (user) => {
 const userController = {
   getFavoriteTrainers: async (req, res) => {
     try {
-      const { userId } = req.params;
+      const {id:userId } = req.params;
 
       // 유저 확인
       const user = await User.findById(userId).populate('favoriteTrainers');
