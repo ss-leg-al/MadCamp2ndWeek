@@ -162,3 +162,24 @@
 | --- | --- | --- |
 | /api/auth/google | GET | GET	구글 로그인 시작 및 인증 요청 |
 | /api/auth/google/redirect | GET | GET	구글 로그인 후 리디렉션 처리 |
+
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/6cbb9978-9ab4-4e2e-94d8-2461518115cd" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/478fecd2-e9d6-4120-8e09-f398d5c873ca" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/187576d8-d4b2-4ffe-b413-c86e6cdf40e5" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/d081d2e7-0acc-4039-bc86-61e08697c07f" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/7738eabc-c14b-4edd-a89b-5d655d0f8140" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/e091dabc-5d33-4e54-85da-e8034f12e07c" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/fa9c637f-991b-4b20-a38c-79555bb582ab" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/6eabee09-849c-499a-a5f3-148e186fd82f" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/a2eac41b-2265-4f27-8e88-2f3505ea2bd9" />
+
+<img width="1204" alt="Image" src="https://github.com/user-attachments/assets/cde6ddc7-cc99-4a48-8f5c-98cedeb5c6cd" />
